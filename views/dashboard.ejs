@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 800px;
+        }
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        form {
+            display: inline;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .actions form {
+            display: inline;
+        }
+        .links {
+            margin-top: 20px;
+        }
+        .links a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Pastes</h1>
+    <ul>
+        <% pastes.forEach(paste => { %>
+            <li>
+                <div>
+                    <a href="/paste/<%= paste.url_short %>"><%= paste.title || "Untitled Paste" %></a> 
+                    <span>(Expires: <%= paste.expire_at ? new Date(paste.expire_at).toLocaleString() : "Never" %>)</span>
+                </div>
+                <div class="actions">
+                    <form action="/paste/<%= paste.url_short %>/update" method="GET">
+                        <button type="submit">Update</button>
+                    </form>
+                    <form action="/paste/<%= paste.url_short %>/delete" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </li>
+        <% }) %>
+    </ul>
+    <div class="links">
+        <a href="/">Create New Paste</a>
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>

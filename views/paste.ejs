@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= paste.title || "Untitled Paste" %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="password"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .paste-details {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+        .paste-details pre {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-x: auto;
+        }
+        p {
+            color: #555;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1><%= paste.title || "Untitled Paste" %></h1>
+
+    <% if (paste.password) { %>
+        <% if (!passwordEntered) { %>
+            <form action="/paste/<%= paste.url_short %>" method="POST">
+                <input type="password" name="password" placeholder="Enter password" required>
+                <button type="submit">Submit</button>
+            </form>
+        <% } else { %>
+            <div class="paste-details">
+                <% if (paste.file_path) { %>
+                    <p><a href="/uploads/<%= paste.file_path %>" download>Download attached file</a></p>
+                <% } %>
+                <pre><code><%= paste.content %></code></pre>
+                <p>Created at: <%= new Date(paste.created_at).toLocaleString() %></p>
+                <% if (paste.expire_at) { %>
+                    <p>Expires at: <%= new Date(paste.expire_at).toLocaleString() %></p>
+                <% } %>
+            </div>
+        <% } %>
+    <% } else { %>
+        <div class="paste-details">
+            <% if (paste.file_path) { %>
+                <p><a href="/uploads/<%= paste.file_path %>" download>Download attached file</a></p>
+            <% } %>
+            <pre><code><%= paste.content %></code></pre>
+            <p>Created at: <%= new Date(paste.created_at).toLocaleString() %></p>
+            <% if (paste.expire_at) { %>
+                <p>Expires at: <%= new Date(paste.expire_at).toLocaleString() %></p>
+            <% } %>
+        </div>
+    <% } %>
+
+    <a href="/">Create another paste</a>
+</body>
+</html>

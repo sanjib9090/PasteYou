@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PasteYou</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="password"],
+        textarea,
+        select,
+        input[type="file"] {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0fba00;
+        }
+        .dashboard a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .github a {
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .auth-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .auth-buttons a {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            flex: 1;
+            margin: 0 5px;
+            transition: background-color 0.3s;
+        }
+        .auth-buttons a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PasteYou</h1>
+        <hr>
+        <p>PasteYou is an open source Text/File Sharing WebApp.</p>
+        <p>Usage: paste any text here, submit, then share it with the URL.</p>
+        <p>Warning: only for temporary share, files will be deleted without notice!</p>
+        <p>Refer to <a class="github" href="https://github.com">Github</a> for more details.</p>
+        <p>Please Register first to use</p>
+        
+        <form action="/create" method="POST" enctype="multipart/form-data">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title">
+            
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" rows="10"></textarea>
+            
+            <label for="expire_at">Expire After:</label>
+            <input type="text" id="expire_at" name="expire_at" placeholder="e.g., 10m,10h,10d,10M">
+            
+            <label for="visibility">Visibility:</label>
+            <select id="visibility" name="visibility">
+                <option value="public">Public</option>  
+                <option value="private">Private</option>
+            </select>
+            
+            <label for="password">Password (optional):</label>
+            <input type="password" id="password" name="password">
+            
+            <label for="url_short">Custom Short URL (optional):</label>
+            <input type="text" id="url_short" name="url_short">
+            
+            <label for="file">Attach a File (optional):</label>
+            <input type="file" id="file" name="file">
+            
+            <button type="submit">Create Paste</button>
+        </form>
+        
+        <a class="dashboard" href="/dashboard">Your Dashboard</a>
+        
+        <div class="auth-buttons">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+    </div>
+</body>
+</html>

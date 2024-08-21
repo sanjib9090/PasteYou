@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Paste</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            box-sizing: border-box;
+        }
+        input[type="text"],
+        textarea,
+        select,
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-top: 15px;
+            display: inline-block;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Update Paste</h1>
+    <form action="/paste/<%= paste.url_short %>/update" method="POST">
+        <input type="text" name="title" value="<%= paste.title || '' %>" placeholder="Title (optional)">
+        <textarea name="content" placeholder="Enter your paste here..."><%= paste.content %></textarea>
+        <input type="text" name="expire_at" value="<%= paste.expire_at ? paste.expire_at.toISOString().slice(0, 16) : '' %>" placeholder="Expiration time (e.g., 10m for 10 minutes)">
+        <select name="visibility">
+            <option value="public" <%= paste.visibility === 'public' ? 'selected' : '' %>>Public</option>
+            <option value="unlisted" <%= paste.visibility === 'unlisted' ? 'selected' : '' %>>Unlisted</option>
+            <option value="private" <%= paste.visibility === 'private' ? 'selected' : '' %>>Private</option>
+        </select>
+        <input type="password" name="password" placeholder="Password (optional)">
+        <button type="submit">Update Paste</button>
+    </form>
+    <a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>
